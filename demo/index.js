@@ -1,3 +1,6 @@
-import { Calculator } from 'calculator';
-console.log(`Import module: Calculator`)
-console.log(`Use module: 1 + 2 = ${Calculator.Add(1, 2)}`); 
+// import { Calculator } from 'calculator';
+// console.log(`Import module: Calculator`)
+// console.log(`Use module: 1 + 2 = ${Calculator.Add(1, 2)}`); 
+import { run } from '../lib/map.parser.js';
+
+run();
