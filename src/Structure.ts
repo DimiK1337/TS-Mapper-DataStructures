@@ -1,6 +1,6 @@
-import { actor, id, name } from "./Types.js";
+import { node, id, name, x, y } from "./Types.js";
 
 export class Structure {
-  static create = (tuple: boolean, id: id, name: name): actor =>
-    tuple ? [id, name] : { id, name };
+  static create = (tuple: boolean, id: id, name: name, x: x, y: y): node =>
+    tuple ? [id, name, x, y] : { id, name, x, y };
 }
