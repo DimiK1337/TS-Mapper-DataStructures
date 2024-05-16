@@ -6,7 +6,8 @@ export class Simulator {
   generateNodes(count: number): node[] {
     let nodes: graph = [];
     for (let i = 0; i < count; i++) {
-      this.nodes.push({ id: `node${i}`, name: `Node ${i}`, x: i, y: i });
+      let idk = { id: `node${i}`, name: `Node ${i}`, x: i, y: i }
+      this.nodes.push(idk);
     }
     return this.nodes;
   }
@@ -16,4 +17,27 @@ export class Simulator {
   }
 
   // TODO: Implement all Operations
+
+
+  // Plot Node
+  plotNode(node: node): void {
+    this.nodes.push(node);
+  }
+
+  // Add Node
+  addNode(node: node): void {
+    this.nodes.push(node);
+  }
+
+  // Remove Node
+  removeNode(id: string): void {
+    this.nodes = this.nodes.filter((node: any) => node.id !== id);
+  }
+
+  // Update Specific Node by ID
+  updateNode(id: string, updatedNode: node): void {
+    this.nodes = this.nodes.map((node: any) =>
+      node.id === id ? updatedNode : node
+    );
+  }
 }
