@@ -27,6 +27,11 @@ move_matrix = {
     "top_right": (0.5, -1)
 }
 
+def ppd(d: dict) -> None:
+    for k,v in d.items():
+        print(f"{k}: {v}")
+
+
 def move_hex(x, y, direction):
     """
     This function moves the hexagon in the grid in the given direction.
@@ -125,7 +130,7 @@ nstemi_1_dec_coords = step_ur_ur_r(*positive_bio_marker_dec_coords)  # Decision 
 nstemi_1_end_coords = step_ur_ur_r(*nstemi_1_dec_coords)  # End of nstemi_1_dec
 
 acs_2_dec_coords = step_br_br_r(*positive_bio_marker_dec_coords)  # Decision node
-other2_coords = step_br_br_r(*acs_2_dec_coords)  # End of acs_2_dec
+other2_coords_end = step_br_br_r(*acs_2_dec_coords)  # End of acs_2_dec
 
 # Here the path is rejoined using a blank node
 # assert that the coords match
@@ -143,7 +148,7 @@ nstemi_2_dec_coords = step_ur_ur_r(*delta_bio_marker_dec_coords)  # Decision nod
 nstemi_2_end_coords = step_ur_ur_r(*nstemi_2_dec_coords)  # End of nstemi_2_dec
 
 acs_3_dec_coords = step_br_br_r(*delta_bio_marker_dec_coords)  # Decision node
-other_3_coords = step_br_br_r(*acs_3_dec_coords)  # End of acs_3_dec
+other_3_coords_end = step_br_br_r(*acs_3_dec_coords)  # End of acs_3_dec
 
 blank_node_coords_2 = step_br_r_br(*nstemi_2_dec_coords)
 assert blank_node_coords_2 == step_ur_r_ur(*acs_3_dec_coords)
@@ -168,7 +173,7 @@ coords = {
     "nstemi_1_dec": nstemi_1_dec_coords,
     "nstemi_1_end": nstemi_1_end_coords,
     "acs_2_dec": acs_2_dec_coords,
-    "other_2": other2_coords, # End of acs_2_dec
+    "other_2_end": other2_coords_end, # End of acs_2_dec
     "blank_node_1": blank_node_coords_1,
     "delay": delay_coords,
     "troponin_biomarker_2": troponin_biomarker_2_coords,
@@ -177,7 +182,7 @@ coords = {
     "nstemi_2_dec": nstemi_2_dec_coords,
     "nstemi_2_end": nstemi_2_end_coords,
     "acs_3_dec": acs_3_dec_coords,
-    "other_3": other_3_coords, # End of acs_3_dec
+    "other_3_end": other_3_coords_end, # End of acs_3_dec
     "blank_node_2": blank_node_coords_2,
     "unstable_angina_dec": unstable_angiina_dec_coords,
     "unstable_angina_end": unstable_angiina_end_coords, # Leaf node
@@ -185,11 +190,12 @@ coords = {
     
 }
 
-for node_name, node_coords in coords.items():
-    print(f"{node_name}: {node_coords}")
+# Filter out 
+decision_nodes = {k: v for k, v in coords.items() if "dec" in k}
+end_nodes = {k: v for k, v in coords.items() if "end" in k}
 
-
-# Test
+# Print all the nodes
+ppd(coords)
 
 
 # Test for br_r_br
@@ -199,3 +205,8 @@ x, y = 420.0483015975663, 311.805
 assert step_br_r_br(x, y) == (540.0621020540138, 415.74)
 print("Test passed for step_br_r_br")
 
+print(f"Dec Nodes:")
+ppd(decision_nodes)
+
+print("End Nodes")
+ppd(end_nodes)
