@@ -1,18 +1,18 @@
 const fs = require("fs");
 const path = require("path");
 
-function performanceReporter(config) {
+function benchmarkReporter(config) {
   var results = [];
   var dir = "";
 
   this.createReportDirectory = () => {
-    dir = config?.performanceReporter?.dir ?? "./output";
+    dir = config?.benchmarkReporter?.dir ?? "./output";
     fs.mkdirSync(dir, { recursive: true });
     return this;
   };
   this.writeReportToFile = () => {
     let filename =
-      config?.performanceReporter?.filename ?? "performance.report.json";
+      config?.benchmarkReporter?.filename ?? "benchmark.report.json";
     let filepath = path.join(dir, filename);
     fs.writeFileSync(filepath, JSON.stringify(results, null, 2));
   };
@@ -32,8 +32,8 @@ function performanceReporter(config) {
   };
 }
 
-performanceReporter.$inject = ["config"];
+benchmarkReporter.$inject = ["config"];
 
 module.exports = {
-  "reporter:performance": ["type", performanceReporter],
+  "reporter:benchmark": ["type", benchmarkReporter],
 };

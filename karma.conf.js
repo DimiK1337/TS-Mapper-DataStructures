@@ -10,11 +10,11 @@ module.exports = function (config) {
     preprocessors: {
       "src/**/!(*.test).js": ["karma-coverage-istanbul-instrumenter"],
     },
-    plugins: ["karma-*", require("./tasks/performanceReporter.js")],
-    reporters: ["spec", "coverage-istanbul", "performance"],
-    performanceReporter: {
+    plugins: ["karma-*", require("./tasks/benchmarkReporter.js")],
+    reporters: ["spec", "coverage-istanbul", "benchmark"],
+    benchmarkReporter: {
       dir: "./output",
-      filename: "performance.report.json",
+      filename: "benchmark.report.json",
     },
     coverageIstanbulInstrumenter: {
       esModules: true,
