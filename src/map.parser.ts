@@ -1,4 +1,4 @@
-import * as d3 from 'd3';
+
 //import { map } from './map.example';
 
 const map = {
@@ -653,73 +653,6 @@ function run() {
         target: idToNode[link.target]
     }));
 
-
-    const svg = d3.select('body').append('svg')
-        .attr('width', 800)
-        .attr('height', 600);
-
-    const link_group = svg
-        .append('g')
-        .classed("links", true)
-
-    // Create the links
-    const link = link_group.selectAll(".link")
-        .data(linksWithIndices)
-        .enter().append("line")
-        .attr("class", "link")
-        .style("stroke", "#aaa");
-
-    const nodes_group = svg
-        .append('g')
-        .classed("nodes", true)
-
-    // Create the nodes
-    const node = nodes_group.selectAll(".node")
-        .data(nodes)
-        .enter().append("circle")
-        .classed("node", true)
-        .attr("r", 5)
-        .style("fill", "blue");
-
-    // Implement force simulation
-    const simulation = d3.forceSimulation(nodes)
-        .force("link", d3.forceLink(linksWithIndices).distance(50))
-        .force("charge", d3.forceManyBody().strength(-100))
-        .force("center", d3.forceCenter(svg.attr("width") / 2, svg.attr("height") / 2))
-        .on("tick", () => {
-            // Update link positions
-            link.attr("x1", d => d.source.x)
-                .attr("y1", d => d.source.y)
-                .attr("x2", d => d.target.x)
-                .attr("y2", d => d.target.y);
-
-            // Update node positions
-            node.attr("cx", d => d.x)
-                .attr("cy", d => d.y);
-        });
-
-    // Optionally, add drag behaviors
-    node.call(d3.drag()
-        .on("start", dragstarted)
-        .on("drag", dragged)
-        .on("end", dragended));
-
-    function dragstarted(event, d) {
-        if (!event.active) simulation.alphaTarget(0.3).restart();
-        d.fx = d.x;
-        d.fy = d.y;
-    }
-
-    function dragged(event, d) {
-        d.fx = event.x;
-        d.fy = event.y;
-    }
-
-    function dragended(event, d) {
-        if (!event.active) simulation.alphaTarget(0);
-        d.fx = null;
-        d.fy = null;
-    }
 }
 
 export { run };
